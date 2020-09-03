@@ -1,0 +1,1 @@
+# Posinym-Dictionary-Api
