@@ -10,77 +10,77 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 
-class User(db.Model):
+class Dictionary(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True)
-    email = db.Column(db.String(120), unique=True)
+    word = db.Column(db.String(80), unique=True)
+    antonym = db.Column(db.String(120), unique=True)
 
     def __init__(self, username, email):
-        self.username = username
-        self.email = email
+        self.word = username
+        self.antonym = email
 
 
-class UserSchema(ma.Schema):
+class DictionarySchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ('username', 'email')
+        fields = ('word', 'antonym')
 
 
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)
+dictionary_schema = DictionarySchema()
+dictionaries_schema = DictionarySchema(many=True)
 
 
 # endpoint to create new user
-@app.route("/user", methods=["POST"])
+@app.route("/dictionary", methods=["POST"])
 def add_user():
-    username = request.json['username']
-    email = request.json['email']
+    word = request.json['word']
+    antonym = request.json['antonym']
 
-    new_user = User(username, email)
+    new_word = Dictionary(word, antonym)
 
-    db.session.add(new_user)
+    db.session.add(new_word)
     db.session.commit()
 
-    return user_schema.jsonify(new_user)
+    return dictionary_schema.jsonify(new_word)
 
 
 # endpoint to show all users
-@app.route("/user", methods=["GET"])
-def get_user():
-    all_users = User.query.all()
-    result = users_schema.dump(all_users)
+@app.route("/dictionary", methods=["GET"])
+def get_word():
+    all_words = Dictionary.query.all()
+    result = dictionaries_schema.dump(all_words)
     return jsonify(result)
 
 
 # endpoint to get user detail by id
-@app.route("/user/<id>", methods=["GET"])
-def user_detail(id):
-    user = User.query.get(id)
-    return user_schema.jsonify(user)
+@app.route("/dictionary/<id>", methods=["GET"])
+def word_detail(id):
+    word = Dictionary.query.get(id)
+    return dictionary_schema.jsonify(word)
 
 
 # endpoint to update user
-@app.route("/user/<id>", methods=["PUT"])
-def user_update(id):
-    user = User.query.get(id)
-    username = request.json['username']
-    email = request.json['email']
+@app.route("/dictionary/<id>", methods=["PUT"])
+def word_update(id):
+    dictionary = Dictionary.query.get(id)
+    word = request.json['word']
+    antonym = request.json['antonym']
 
-    user.email = email
-    user.username = username
+    dictionary.antonym = antonym
+    dictionary.word = word
 
     db.session.commit()
-    return user_schema.jsonify(user)
+    return dictionary_schema.jsonify(dictionary)
 
 
 # endpoint to delete user
-@app.route("/user/<id>", methods=["DELETE"])
-def user_delete(id):
-    user = User.query.get(id)
-    db.session.delete(user)
+@app.route("/dictionary/<id>", methods=["DELETE"])
+def word_delete(id):
+    word = Dictionary.query.get(id)
+    db.session.delete(word)
     db.session.commit()
 
-    return user_schema.jsonify(user)
+    return dictionary_schema.jsonify(word)
 
 
 if __name__ == '__main__':
