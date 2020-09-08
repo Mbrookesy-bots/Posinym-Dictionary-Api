@@ -10,6 +10,8 @@ STILL A WORK IN PROGRESS
 
 ### Without the Bot
 
+Remember to import your database as `dictionary.sqlite` or use the database dump provided in the repo.
+
 You can run the API locally using the following commands within your command line.
 
 - `export FLASK_APP=routes.py` - this will set the environment variable `FLASK_APP` to where the api will run from.
