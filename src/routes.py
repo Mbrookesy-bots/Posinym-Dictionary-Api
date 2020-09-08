@@ -30,7 +30,7 @@ dictionary_schema = DictionarySchema()
 dictionaries_schema = DictionarySchema(many=True)
 
 
-# endpoint to create new user
+# endpoint to create new word
 @app.route("/dictionary", methods=["POST"])
 def add_user():
     word = request.json['word']
@@ -44,7 +44,7 @@ def add_user():
     return dictionary_schema.jsonify(new_word)
 
 
-# endpoint to show all users
+# endpoint to show all word
 @app.route("/dictionary", methods=["GET"])
 def get_word():
     all_words = Dictionary.query.all()
@@ -59,7 +59,7 @@ def word_detail(id):
     return dictionary_schema.jsonify(word)
 
 
-# endpoint to update user
+# endpoint to update word
 @app.route("/dictionary/<id>", methods=["PUT"])
 def word_update(id):
     dictionary = Dictionary.query.get(id)
@@ -73,7 +73,7 @@ def word_update(id):
     return dictionary_schema.jsonify(dictionary)
 
 
-# endpoint to delete user
+# endpoint to delete word
 @app.route("/dictionary/<id>", methods=["DELETE"])
 def word_delete(id):
     word = Dictionary.query.get(id)
