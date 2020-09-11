@@ -2,6 +2,11 @@
 
 This API is to interact with the Posinym Twitter Bot.
 
+dependencies:
+- flask 1.1.2
+- flask_sqlalchemy 2.4.4
+- flask_marshmallow 0.13.0
+
 ## Trying the API.
 
 ### With the Bot
